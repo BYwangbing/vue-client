@@ -9,6 +9,7 @@
         <Sidebar></Sidebar>
         <div class="wrap">
             <Header></Header>
+
         </div>
     </div>
 </template>
