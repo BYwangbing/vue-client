@@ -10,7 +10,6 @@
         <div class="wrap">
             <Header></Header>
         </div>
-
     </div>
 </template>
 
