@@ -6,9 +6,11 @@
 
 <script>
   import Login from './pages/Login/Login'
+  import BaseInform from './pages/Admin/AdminIndex'
   export default {
     components: {
-      Login
+      Login,
+      BaseInform
     }
   }
 </script>

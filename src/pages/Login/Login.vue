@@ -6,6 +6,11 @@
             <div id="login_form" class="form">
                 <input type="text" placeholder="用户名" id="user_name" v-model="username"/>
                 <input type="password" placeholder="密码" id="password" v-model="password"/>
+                <input type="text" maxlength="4" placeholder="验证码" v-model="captcha">
+                <div class="login_captcha">
+                    <img class="get_verification" v-model="captcha" src="http://127.0.0.1:3000/captcha" ref="captcha" alt="captcha"
+                         @click="getCaptcha">
+                </div>
                 <button id="login" @click="login">登　录</button>
                 <p class="message">还没有账户?
                     <router-link to="/register">立刻创建</router-link>
@@ -17,12 +22,14 @@
 
 <script>
     import {login} from '../../api'
-    import { Toast } from 'mint-ui'
+    import {Toast} from 'mint-ui'
+    import {mapState} from 'vuex'
     export default {
         data() {
             return {
                 username: '',
                 password: '',
+                captcha: '', // 图形验证码
                 isActive: false, //是否摇晃
                 tips: '欢迎登陆~~' // 提示信息
             }
@@ -41,10 +48,30 @@
                     duration: 2000
                 });
             },
+            // 动态一次性图形验证码
+            getCaptcha() {
+                this.$refs.captcha.src = 'http://127.0.0.1:3000/captcha?time=' + Date.now();
+            },
             async login() {
-                const {username, password, showAlert} = this;
-                let result = await login(username, password);
-                showAlert(result.message);
+                const {username, password, captcha, showAlert} = this;
+
+                let result = await login(username, password, captcha);
+
+                if (result.code === 0) {
+                    const user = result.data;
+                    var list = JSON.parse(localStorage.getItem('user') || '[]');
+                    list.unshift(user);
+                    localStorage.setItem('user', JSON.stringify(list));
+                    // 将user保存到vuex的state
+                    this.$store.dispatch('recordUser', user);
+                    // 去个人中心界面
+                    this.$router.replace('/admin');
+                } else {
+                    // 显示新的图片验证码
+                    this.getCaptcha();
+                    // 显示警告提示
+                    showAlert(result.message);
+                }
             },
         },
         created() {
@@ -55,11 +82,38 @@
 </script>
 
 <style scoped>
-    @import "../../../static/css/htmleaf-demo.css";
-    @import "../../../static/css/normalize.css";
+    @import "../../assets/css/htmleaf-demo.css";
+    @import "../../assets/css/normalize.css";
+
+    .htmleaf-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #a044ff; /* fallback for old browsers */
+        background: -webkit-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: -moz-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: -o-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: linear-gradient(to left, #e71bc4 0%, #a044ff 100%);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .login_captcha {
+        position: relative;
+        margin-bottom: 65px;
+        cursor: pointer;
+    }
+
+    .login_captcha img {
+        position: absolute;
+        right: 0;
+    }
+
     .login-page {
         width: 360px;
-        padding: 8% 0 0;
+        padding: 4% 0 0;
         margin: auto;
     }
 

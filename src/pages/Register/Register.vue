@@ -68,8 +68,23 @@
 
 
 <style scoped>
-    @import "../../../static/css/htmleaf-demo.css";
-    @import "../../../static/css/normalize.css";
+    @import "../../assets/css/htmleaf-demo.css";
+    @import "../../assets/css/normalize.css";
+
+    .htmleaf-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #a044ff; /* fallback for old browsers */
+        background: -webkit-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: -moz-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: -o-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
+        background: linear-gradient(to left, #e71bc4 0%, #a044ff 100%);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
     .login-page {
         width: 360px;

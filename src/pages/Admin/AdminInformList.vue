@@ -3,7 +3,7 @@
         <Sidebar></Sidebar>
         <div class="wrap">
             <Header></Header>
-            <User></User>
+            <Inform></Inform>
         </div>
     </div>
 </template>
@@ -11,13 +11,13 @@
 <script>
     import Sidebar from '../../components/common/Sidebar'
     import Header from '../../components/common/Header'
-    import User from '../../components/admin/UserList'
+    import Inform from '../../components/admin/InformList'
 
     export default {
         components: {
             Sidebar,
             Header,
-            User
+            Inform
         }
     }
 </script>

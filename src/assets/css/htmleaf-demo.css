@@ -10,7 +10,7 @@
 }
 
 [class^="icon-"], [class*=" icon-"] {
-    font-family: 'icomoon';
+    font-family: 'icomoon', serif;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -50,13 +50,6 @@ body, html {
 }
 
 body {
-    background: #a044ff; /* fallback for old browsers */
-    background: -webkit-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
-    background: -moz-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
-    background: -o-linear-gradient(right, #e71bc4 0%, #a044ff 100%);
-    background: linear-gradient(to left, #e71bc4 0%, #a044ff 100%);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     color: #D5D6E2;
     font-weight: 500;
     font-size: 1.05em;

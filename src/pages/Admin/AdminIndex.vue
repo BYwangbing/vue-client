@@ -3,21 +3,20 @@
         <Sidebar></Sidebar>
         <div class="wrap">
             <Header></Header>
-            <User></User>
+            <Base></Base>
         </div>
     </div>
 </template>
-
 <script>
     import Sidebar from '../../components/common/Sidebar'
     import Header from '../../components/common/Header'
-    import User from '../../components/admin/UserList'
+    import Base from '../../components/admin/BaseIndex'
 
     export default {
         components: {
             Sidebar,
             Header,
-            User
+            Base
         }
     }
 </script>
