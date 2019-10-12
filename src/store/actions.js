@@ -5,11 +5,11 @@
     可以包含异步代码(定时器, ajax)
  */
 import {logout, operateListReq, findOperateUser, reqEditOperateUser} from '../api'
+import {Toast} from 'mint-ui'
 import {
     RECEIVE_USER_INFO,
     RESET_USER_INFO,
     RECEIVE_OPERATE_LIST,
-    FIND_OPERATE_USER,
     EDIT_OPERATE_USER
 } from './mutation-types'
 
@@ -20,6 +20,8 @@ export default {
     },
     // 异步登出
     async login_Out({commit}) {
+        localStorage.clear();
+        sessionStorage.clear();
         const result = await logout();
         if (result.code === 0) {
             commit(RESET_USER_INFO)
@@ -39,6 +41,7 @@ export default {
     async searchOperate({commit}, keywords) {
         // 发送异步ajax请求
         const result = await findOperateUser(keywords);
+        Toast(result.message);
         if (result.code === 0) {
             var operateList = result.data;
             commit(RECEIVE_OPERATE_LIST, {operateList});

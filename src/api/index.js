@@ -28,3 +28,5 @@ export const deleteOperateUser = (id) => ajax(BASE_URL + '/users/deleteOperateUs
 export const reqEditOperateUser = (id) => ajax(BASE_URL + '/users/modifyOperateUser', {id});
 // 查找运营人员
 export const findOperateUser = (keyword) => ajax(BASE_URL + '/users/findOperateUser', {keyword}, 'POST');
+//下载所有用户
+export const reqListDownload = () => ajax(BASE_URL+'/users/download');

@@ -59,9 +59,10 @@
 
                 if (result.code === 0) {
                     const user = result.data;
-                    var list = JSON.parse(localStorage.getItem('user') || '[]');
-                    list.unshift(user);
-                    localStorage.setItem('user', JSON.stringify(list));
+                    var session = window.sessionStorage;
+                    console.log(session);
+                    var d = JSON.stringify(user);
+                    session.setItem('data', d);
                     // 将user保存到vuex的state
                     this.$store.dispatch('recordUser', user);
                     // 去后台首页

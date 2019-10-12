@@ -254,24 +254,24 @@ input{
     padding: 0px 0px 10px;
 }
 .t_box .box_tit{
+    overflow: hidden;
     border-color: #e7eaec;
     border-style: solid solid solid;
     border-width: 4px 0 1px;
     color: inherit;
     margin-bottom: 0;
-    padding: 14px 84px 7px 15px;
+    padding: 14px 31px 7px 15px;
     min-height: 48px;
 }
 .t_box .box_tit .box_add{
-    position: absolute;
+    float: right;
     color: #fff;
     border-radius: 2px;
-    top: 15px;
-    right: 30px;
     padding: 2px 10px;
-    background-color: rgb(0, 150, 136);
+    margin-left: 12px;
     text-align: center;
     cursor: pointer;
+    background-color: rgb(0, 150, 136);
 }
 .t_box .box_table{
     margin: 20px 30px;

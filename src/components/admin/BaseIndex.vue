@@ -15,13 +15,13 @@
                     <div class="con_input_l con_input_alike">
                         <span>公司名称</span>
                     </div>
-                    <input class="con_input_r con_input_alike" type="text" placeholder="请输入添加的公司名称" />
+                    <input class="con_input_r con_input_alike" type="text" placeholder="请输入添加的公司名称"/>
                 </div>
                 <div class="con_input">
                     <div class="con_input_l con_input_alike">
                         <span>工号</span>
                     </div>
-                    <input class="con_input_r con_input_alike" type="text" placeholder="请输入公司工号的前四位" />
+                    <input class="con_input_r con_input_alike" type="text" placeholder="请输入公司工号的前四位"/>
                 </div>
             </div>
             <div class="modal_sub">
@@ -31,11 +31,6 @@
         </div>
         <div class="shadow" v-if="isActive"></div>
         <div class="tables" style="margin: 0">
-            <div class="table_search anim">
-                <input placeholder="请输入公司名称" />
-                <div class="search">搜索</div>
-            </div>
-
             <div class="t_box anim">
                 <div class="box_tit">
                     <span><b>基本信息</b></span>
@@ -54,20 +49,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-if="userInfo">
-                                <td>{{userInfo._id}}</td>
-                                <td>{{userInfo.username}}</td>
-                                <td>{{userInfo.email}}</td>
-                                <td>{{userInfo.password}}</td>
-                                <td>头像</td>
-                                <td>
-                                    <div class="operation">
-                                        <a class="op_look">查看</a>
-                                        <a class="op_agree">编辑</a>
-                                        <a class="op_refuse">删除</a>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{username}}</td>
+                            <td>{{email}}</td>
+                            <td>{{password}}</td>
+                            <td>头像</td>
+                            <td>
+                                <div class="operation">
+                                    <a class="op_refuse">编辑</a>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
 
@@ -79,14 +72,32 @@
 
 <script>
     import {mapState} from 'vuex'
+
     export default {
-        data(){
+        data() {
             return {
-                isActive: false
+                isActive: false,
+                id: '',
+                username: '',
+                password: '',
+                email: '',
             }
         },
         computed: {
             ...mapState(['userInfo'])
+        },
+        mounted() {
+            const userStr = window.sessionStorage.getItem('data');
+            const userObj = JSON.parse(userStr);
+            this.id = userObj._id;
+            this.username = userObj.username;
+            this.password = userObj.password;
+            this.email = userObj.email;
+
+            this.userInfo._id = userObj._id;
+            this.userInfo.username = userObj.username;
+            this.userInfo.password = userObj.password;
+            this.userInfo.email = userObj.email;
         },
         methods: {
             addStaff() {

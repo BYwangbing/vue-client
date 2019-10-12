@@ -94,13 +94,16 @@
                 <div class="box_tit">
                     <span><b>运营人员</b></span>
                     <div class="box_add" @click="addStaff">添加</div>
+                    <div class="box_add" @click="exportExcel">2.导出Excel表</div>
+                    <div class="box_add" @click="exportToExcel">1.下载Excel表</div>
+
                 </div>
                 <div class="box_table">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr class="active">
                             <th>编号</th>
-<!--                            <th>序号</th>-->
+                            <!--                            <th>序号</th>-->
                             <th>姓名</th>
                             <th>工号</th>
                             <th>年龄</th>
@@ -115,7 +118,7 @@
                         <tbody>
                         <tr v-for="(operate_list, index) in operateList" :key="index">
                             <th>{{index+1}}</th>
-<!--                            <td>{{operate_list._id}}</td>-->
+                            <!--                            <td>{{operate_list._id}}</td>-->
                             <td>{{operate_list.operateName}}</td>
                             <td>{{operate_list.operateNumber}}</td>
                             <td>{{operate_list.operateAge}}</td>
@@ -143,7 +146,9 @@
 <script>
     import {mapState} from 'vuex'
     import {Toast} from 'mint-ui'
-    import {deleteOperateUser, findOperateUser} from '../../api/index'
+    import {deleteOperateUser, reqListDownload} from '../../api/index'
+    import FileSaver from 'file-saver'
+    import XLSX from 'xlsx'
 
     export default {
         data() {
@@ -168,6 +173,29 @@
             ...mapState(['operateList'])
         },
         methods: {
+            // 下载Excel表
+            exportToExcel() {
+                let et = XLSX.utils.table_to_book(document.getElementsByClassName('box_table')[0]);
+                let etout = XLSX.write(et, {
+                    bookType: 'xlsx',
+                    bookSST: true,
+                    type: 'array'
+                });
+                try {
+                    FileSaver.saveAs(new Blob([etout], {
+                        type: 'application/octet-stream'
+                    }), 'table.xlsx');   //XXX.xlsx 为导出的文件名
+                } catch (e) {
+                    console.log(e, etout);
+                }
+                return etout;
+            },
+            async exportExcel() {
+                const result = await reqListDownload();
+                if (result.code === 0) {
+                    window.location.href = result.file;
+                }
+            },
             // 路由跳转
             goTo(path) {
                 this.$router.replace(path)
@@ -191,7 +219,7 @@
             },
             // 添加
             submitForm(event) {
-                const {operateName, operateNumber, operateAge,operateContact, operateSex, operateEmail, operateAddress} = this;
+                const {operateName, operateNumber, operateAge, operateContact, operateSex, operateEmail, operateAddress} = this;
                 event.preventDefault();
                 let formData = new window.FormData();
                 formData.append('operateName', operateName);
@@ -211,9 +239,11 @@
                     let result = res.data;
                     console.log(result);
                     Toast(result.message);
-                    setTimeout(() => {
-                        this.$router.go(0);
-                    }, 1000);
+                    if (result.code === 0) {
+                        setTimeout(() => {
+                            this.$router.go(0);
+                        }, 1000);
+                    }
                 })
             },
             // 删除

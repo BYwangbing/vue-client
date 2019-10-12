@@ -5,7 +5,8 @@ import {RECEIVE_USER_INFO, RESET_USER_INFO, RECEIVE_OPERATE_LIST, EDIT_OPERATE_U
 
 export default {
     [RECEIVE_USER_INFO](state, {userInfo}) {
-        state.userInfo = userInfo
+        state.userInfo = userInfo;
+        localStorage.user = JSON.stringify(state.userInfo); // 可以顺手存入 localStorage 中
     },
     [RESET_USER_INFO](state) {
         state.userInfo = {}

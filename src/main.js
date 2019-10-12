@@ -20,10 +20,19 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios);
 import axios from 'axios'
 
+import './assets/css/bootstrap.min.css'
+//开启debug模式
+Vue.config.debug = true;
 Vue.prototype.axios = axios;
 axios.defaults.withCredentials = true;//每次请求，无论是否跨域，都带上cookie信息
+// 原生ajax、axios请求时，如果不显示的设置Content-Type，那么默认是text/plain，
+// 这时服务器就不知道怎么解析数据了，所以才只能通过获取原始数据流的方式来进行解析请求数据。
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.config.productionTip = false;
+
+
+import VueSession from 'vue-session'
+Vue.use(VueSession);
 
 import Router from 'vue-router'
 
@@ -32,7 +41,17 @@ Router.prototype.push = function push(location) {
     return routerPush.call(this, location).catch(error => error);
 };
 
-import './assets/css/bootstrap.min.css'
+Vue.http.interceptors.push((request, next) => {
+
+    request.withCredentials=true;
+
+    next((response) => {
+
+        return response;
+
+    });
+
+});
 
 new Vue({
     router, //使用上vue-router
