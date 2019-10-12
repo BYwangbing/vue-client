@@ -117,7 +117,7 @@ ul li{
 .tables{
     margin: 20px;
     width: 100%;
-    height: calc(100% - 70px);
+    height: 620.6px;
     background-color:#F3F3F4;
     padding: 20px;
     box-sizing: border-box!important;
@@ -282,7 +282,7 @@ thead tr th{
 }
 tbody tr td{
     color: #676a6c;
-    padding: 4px 8px!important;
+    padding: 0 8px!important;
 }
 tbody tr td .operation{
     position: relative;

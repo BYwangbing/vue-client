@@ -25,6 +25,13 @@ axios.defaults.withCredentials = true;//每次请求，无论是否跨域，都�
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.config.productionTip = false;
 
+import Router from 'vue-router'
+
+const routerPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return routerPush.call(this, location).catch(error => error);
+};
+
 import './assets/css/bootstrap.min.css'
 
 new Vue({

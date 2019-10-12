@@ -12,7 +12,10 @@ import Login from '../pages/Login/Login' // 登录
 import Register from '../pages/Register/Register' // 注册
 import BaseIndex from '../pages/Admin/AdminIndex' // 基本信息页
 import UserList from '../pages/Admin/AdminUserList' // 运营人员列表页
+import OperateEdit from '../pages/Admin/AdminOperateEdit' // 修改运营人员
+import OperateView from '../pages/Admin/AdminOperateView' // 查看运营人员
 import InformList from '../pages/Admin/AdminInformList' // 信息管理列表页
+
 import TechnologyList from '../pages/Admin/AdminTechnologyListList'// 技术动态列表页
 
 export default new VueRouter({
@@ -29,6 +32,10 @@ export default new VueRouter({
         {path: '/admin', name: 'BaseIndex', component: BaseIndex},
         // 运营人员列表页
         {path: '/admin/userList', name: 'UserList', component: UserList},
+        // 修改运营人员
+        {path: '/admin/modifyOperate/:id', name: 'OperateEdit', component: OperateEdit},
+        // 查看运营人员
+        {path: '/admin/viewOperate/:id', name: 'OperateView', component: OperateView},
         // 信息管理列表页
         {path: '/admin/informList', name: 'InformList', component: InformList},
         // 技术动态列表页

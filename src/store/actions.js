@@ -4,8 +4,14 @@
     触发: 组件中: $store.dispatch('action 名称', data1)
     可以包含异步代码(定时器, ajax)
  */
-import {logout, operateListReq, findOperateUser} from '../api'
-import {RECEIVE_USER_INFO, RESET_USER_INFO, RECEIVE_OPERATE_LIST, FIND_OPERATE_USER} from './mutation-types'
+import {logout, operateListReq, findOperateUser, reqEditOperateUser} from '../api'
+import {
+    RECEIVE_USER_INFO,
+    RESET_USER_INFO,
+    RECEIVE_OPERATE_LIST,
+    FIND_OPERATE_USER,
+    EDIT_OPERATE_USER
+} from './mutation-types'
 
 export default {
     // 同步记录用户信息
@@ -26,7 +32,6 @@ export default {
         const result = await operateListReq();
         if (result.code === 0) {
             var operateList = result.data;
-            // console.log(operateList);
             commit(RECEIVE_OPERATE_LIST, {operateList})
         }
     },
@@ -35,8 +40,17 @@ export default {
         // 发送异步ajax请求
         const result = await findOperateUser(keywords);
         if (result.code === 0) {
-            var operateUser = result.data;
-            commit(RECEIVE_OPERATE_LIST, {operateUser});
+            var operateList = result.data;
+            commit(RECEIVE_OPERATE_LIST, {operateList});
+        }
+    },
+    // 获取修改运营人员信息
+    async editOperate({commit}, id) {
+        // 发送异步ajax请求
+        const result = await reqEditOperateUser(id);
+        if (result.code === 0) {
+            var modifyOperate = result.data;
+            commit(EDIT_OPERATE_USER, {modifyOperate})
         }
     }
 };

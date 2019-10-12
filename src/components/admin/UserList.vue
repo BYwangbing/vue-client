@@ -28,6 +28,13 @@
                     </div>
                     <div class="con_input">
                         <div class="con_input_l con_input_alike">
+                            <span>年龄</span>
+                        </div>
+                        <input class="con_input_r con_input_alike" type="text" placeholder="请输入该运营人员工号"
+                               v-model="operateAge"/>
+                    </div>
+                    <div class="con_input">
+                        <div class="con_input_l con_input_alike">
                             <span>联系方式</span>
                         </div>
                         <input class="con_input_r con_input_alike" type="text" placeholder="请输入该运营人员联系方式"
@@ -79,7 +86,7 @@
         <div class="shadow" v-if="isActive"></div>
         <div class="tables" style="margin: 0">
             <div class="table_search anim">
-                <input placeholder="请输入姓名查询" v-model="keywords" @keyup.enter="search"/>
+                <input name="keyword" placeholder="请输入姓名查询" v-model="keywords" @keyup.enter="search"/>
                 <div class="search" @click="search">搜索</div>
             </div>
 
@@ -92,9 +99,11 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr class="active">
-                            <th>序号</th>
+                            <th>编号</th>
+<!--                            <th>序号</th>-->
                             <th>姓名</th>
                             <th>工号</th>
+                            <th>年龄</th>
                             <th>联系方式</th>
                             <th>性别</th>
                             <th>邮箱</th>
@@ -105,9 +114,11 @@
                         </thead>
                         <tbody>
                         <tr v-for="(operate_list, index) in operateList" :key="index">
-                            <td>{{operate_list._id}}</td>
+                            <th>{{index+1}}</th>
+<!--                            <td>{{operate_list._id}}</td>-->
                             <td>{{operate_list.operateName}}</td>
                             <td>{{operate_list.operateNumber}}</td>
+                            <td>{{operate_list.operateAge}}</td>
                             <td>{{operate_list.operateContact}}</td>
                             <td>{{operate_list.operateSex}}</td>
                             <td>{{operate_list.operateEmail}}</td>
@@ -115,8 +126,8 @@
                             <td class="urlImg"><img :src="imgUrl + operate_list.operatePortrait" alt=""></td>
                             <td>
                                 <div class="operation">
-                                    <a class="op_look">查看</a>
-                                    <a class="op_agree">修改</a>
+                                    <a class="op_look" @click="goTo(`/admin/viewOperate/${operate_list._id}`)">查看</a>
+                                    <a class="op_agree" @click="goTo(`/admin/modifyOperate/${operate_list._id}`)">修改</a>
                                     <a class="op_refuse" @click="deleteOperate(operate_list._id)">删除</a>
                                 </div>
                             </td>
@@ -141,6 +152,7 @@
                 keywords: '', //  搜索关键字
                 operateName: '',
                 operateNumber: '',
+                operateAge: '',
                 operateContact: '',
                 operateSex: '',
                 operateEmail: '',
@@ -156,6 +168,10 @@
             ...mapState(['operateList'])
         },
         methods: {
+            // 路由跳转
+            goTo(path) {
+                this.$router.replace(path)
+            },
             // 增加运营人员弹框
             addStaff() {
                 this.isActive = true;
@@ -175,11 +191,12 @@
             },
             // 添加
             submitForm(event) {
-                const {operateName, operateNumber, operateContact, operateSex, operateEmail, operateAddress} = this;
+                const {operateName, operateNumber, operateAge,operateContact, operateSex, operateEmail, operateAddress} = this;
                 event.preventDefault();
                 let formData = new window.FormData();
                 formData.append('operateName', operateName);
                 formData.append('operateNumber', operateNumber);
+                formData.append('operateAge', operateAge);
                 formData.append('operateContact', operateContact);
                 formData.append('operateSex', operateSex);
                 formData.append('operateEmail', operateEmail);
@@ -195,8 +212,8 @@
                     console.log(result);
                     Toast(result.message);
                     setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                        this.$router.go(0);
+                    }, 1000);
                 })
             },
             // 删除
@@ -207,8 +224,8 @@
                     console.log(result);
                     Toast(result.message);
                     setTimeout(() => {
-                        window.location.reload();
-                    }, 2000);
+                        this.$router.go(0);
+                    }, 1000);
                 }
             },
             // 查找

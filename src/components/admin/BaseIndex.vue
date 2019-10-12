@@ -46,9 +46,6 @@
                         <thead>
                         <tr class="active">
                             <th>序号</th>
-                            <th>姓名</th>
-                            <th>班级</th>
-                            <th>学号</th>
                             <th>用户名</th>
                             <th>邮箱号</th>
                             <th>密码</th>
@@ -59,9 +56,6 @@
                         <tbody>
                             <tr v-if="userInfo">
                                 <td>{{userInfo._id}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td>{{userInfo.username}}</td>
                                 <td>{{userInfo.email}}</td>
                                 <td>{{userInfo.password}}</td>

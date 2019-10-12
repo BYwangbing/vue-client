@@ -6,7 +6,7 @@
             <div id="login_form" class="form">
                 <input type="text" placeholder="用户名" id="user_name" v-model="username"/>
                 <input type="password" placeholder="密码" id="password" v-model="password"/>
-                <input type="text" maxlength="4" placeholder="验证码" v-model="captcha">
+                <input type="text" maxlength="4" placeholder="验证码" v-model="captcha" @keyup.enter="login">
                 <div class="login_captcha">
                     <img class="get_verification" v-model="captcha" src="http://127.0.0.1:3000/captcha" ref="captcha" alt="captcha"
                          @click="getCaptcha">
@@ -64,7 +64,7 @@
                     localStorage.setItem('user', JSON.stringify(list));
                     // 将user保存到vuex的state
                     this.$store.dispatch('recordUser', user);
-                    // 去个人中心界面
+                    // 去后台首页
                     this.$router.replace('/admin');
                 } else {
                     // 显示新的图片验证码
